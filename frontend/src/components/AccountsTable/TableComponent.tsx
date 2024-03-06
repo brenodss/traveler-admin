@@ -4,7 +4,7 @@ import { DataTable } from "./DataTable"
 import handleCsvChange from "@/helpers/HandleChanges";
 import DeleteSvg from "@/assets/DeleteSvg";
 import { Button } from "../ui/button";
-import { createAccount, verifyAndGetCode } from "@/fetchs";
+// import { createAccount, verifyAndGetCode } from "@/fetchs";
 
 interface IAccountsCsvData {
   email: string;
@@ -70,7 +70,7 @@ const TableComponent = ({ data, setData, setCsvData }: any) => {
                   return item;
                 })
               })
-              await createAccount(email, password, setCsvData, row.index)
+              // await createAccount(email, password, setCsvData, row.index) # TODO
               setCsvData((previous: any) => {
                 return previous.map((item: any, index: number) => {
                   if (index === row.index) {
@@ -102,7 +102,7 @@ const TableComponent = ({ data, setData, setCsvData }: any) => {
           return <Button
             onClick={async () => {
            
-              await verifyAndGetCode(email, password, setCsvData, row.index)
+              // await verifyAndGetCode(email, password, setCsvData, row.index) # TODO
               
             }}
             key={row.index}
