@@ -1,0 +1,17 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+html {
+  background-color: #09090b;
+}
+
+
+* {
+  font-family: 'Poppins';
+  font-size: 12.5px; 
+}
+
+button {
+  --tw-ring-shadow: 0 0 #000 !important;
+}
