@@ -7,7 +7,7 @@
 ````
 
 ````
-3- Go inside frontend and run -> npm run dev
+3- Go inside frontend and run -> bun run dev
 ````
 
 ````
