@@ -1,10 +1,9 @@
-import { Loading } from '../../assets/Loading';
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTable } from "./DataTable"
 import handleCsvChange from "@/helpers/HandleChanges";
 import DeleteSvg from "@/assets/DeleteSvg";
-import { Button } from "../ui/button";
-// import { createAccount, verifyAndGetCode } from "@/fetchs";
+import CreateAccountButton from '../CreateAccountButton';
+import GetImapInfoButton from '../GetImapInfoButton';
 
 interface IAccountsCsvData {
   email: string;
@@ -22,7 +21,6 @@ const TableComponent = ({ data, setData, setCsvData }: any) => {
   const getColums = () => {
 
     const columns: ColumnDef<IAccountsCsvData>[] = [
-
       {
         accessorKey: "email", // the value
         header: () => {
@@ -56,38 +54,8 @@ const TableComponent = ({ data, setData, setCsvData }: any) => {
           const email = data[row.index].email;
           const password = data[row.index].password;
           const status = data[row.index].status;
-
-          return <Button
-            onClick={async () => {
-              setCsvData((previous: any) => {
-                return previous.map((item: any, index: number) => {
-                  if (index === row.index) {
-                    return {
-                      ...item,
-                      loading: "true",
-                    }
-                  }
-                  return item;
-                })
-              })
-              // await createAccount(email, password, setCsvData, row.index) # TODO
-              setCsvData((previous: any) => {
-                return previous.map((item: any, index: number) => {
-                  if (index === row.index) {
-                    return {
-                      ...item,
-                      loading: "false",
-                    }
-                  }
-                  return item;
-                })
-              })
-            }}
-            disabled={status === 'Created' || (!email || !password) || status.includes("used")}
-            className="text-emerald-400 hover:border-emerald-400 w-full border border-[#ddd8]">
-            { data[row.index].loading === "true" && <Loading /> }
-            Create
-          </Button>
+          
+          return <CreateAccountButton csvData={data} setCsvData={setCsvData} email={email} password={password} status={status} row={row}/>
         }
       },
       {
@@ -98,18 +66,10 @@ const TableComponent = ({ data, setData, setCsvData }: any) => {
         cell: ({ row }) => {
           const email = data[row.index].email;
           const password = data[row.index].password;
-          
-          return <Button
-            onClick={async () => {
-           
-              // await verifyAndGetCode(email, password, setCsvData, row.index) # TODO
-              
-            }}
-            key={row.index}
-            className="text-emerald-400 hover:border-emerald-400 w-full border border-[#ddd8]">
-            { data[row.index].loading === "true" && <Loading /> } 
-            Verify
-          </Button>
+          const status = data[row.index].status;
+          const imapServer = data[row.index].Imap;
+
+          return <GetImapInfoButton email={email} password={password} row={row} csvData={data} setCsvData={setCsvData} status={status} imapServer={imapServer}  />
         }
       },
       {
@@ -141,20 +101,10 @@ const TableComponent = ({ data, setData, setCsvData }: any) => {
         cell: ({ renderValue }) => {
           const cellValue = renderValue() as string;
 
-          return <p className="text-slate-400 truncate ...">{cellValue.slice(0, 5) + '...'}</p>
+          return <p className="text-slate-400 truncate ...">{cellValue}</p>
         }
       },
-      {
-        accessorKey: "passwordHash",
-        header: () => {
-          return <span className="text-[#ddd] text-ellipsis overflow-hidden">PasswordHash</span>
-        },
-        cell: ({ renderValue }) => {
-          const cellValue = renderValue() as string;
 
-          return <span className="text-slate-400">{cellValue.slice(0, 5) + '...'}</span>
-        }
-      },
       {
         accessorKey: "vpnEnabled",
         header: () => {
@@ -190,23 +140,17 @@ const TableComponent = ({ data, setData, setCsvData }: any) => {
           // 3 - unverified
           // 4 - ready
           // 5 - errors (too much requests, failed login, )
-
-          if (cellValue === 'Created') statusColor = "text-emerald-200" 
-          if (cellValue === 'ready') statusColor = "text-emerald-300" 
-          if (cellValue.includes('Error')) statusColor = "text-red-500"
-          if (cellValue.includes('already')) statusColor = "text-red-500"
-          if (cellValue.includes('Verified')) statusColor = "text-emerald-400 font-bold"
+          statusColor = 'text-[#c4c4c4]'
+          if(cellValue) {
+            if (cellValue === 'Registered') statusColor = "text-emerald-300" 
+            if (cellValue === 'Verified') statusColor = "text-emerald-400" 
+            if (cellValue === 'Tutorial Finished') statusColor = "text-[#ddd] rounded-xl p-2 font-bold bg-emerald-800" 
+            if (cellValue.includes('Error')) statusColor = "text-red-500"
+            if (cellValue.includes('already')) statusColor = "text-red-500"
+            
+          }
+          
           return <span className={`${statusColor}`}>{cellValue}</span>
-        }
-      },
-      {
-        accessorKey: "envPort",
-        header: () => {
-          return <span className="text-[#ddd]">Port</span>
-        },
-        cell: ({ renderValue }) => {
-          const cellValue = renderValue() as string;
-          return <span className={`text-[#ddd]`}>{cellValue}</span>
         }
       },
       {

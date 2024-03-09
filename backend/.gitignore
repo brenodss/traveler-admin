@@ -1,5 +1,9 @@
 # Based on https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
 
+# Traveler related
+account.csv
+150accounts.csv
+
 # Logs
 
 logs

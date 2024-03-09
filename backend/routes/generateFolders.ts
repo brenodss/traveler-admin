@@ -7,7 +7,7 @@ import implementEnvFile from "../utils/implementEnvFile";
 const generateFolders = express()
 
 generateFolders.post('/', async (req, res) => {
-    const file = Bun.file('./accounts.csv');
+    const file = Bun.file('./account.csv');
     
     const csv = parse(await file.text(), { header: true }) as any;
     let createFolders = []
