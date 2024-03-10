@@ -1,6 +1,6 @@
 # Based on https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
 
-#traveler stuff
+# Traveler related
 account.csv
 
 # Logs

@@ -53,19 +53,20 @@ const createAccount = async (email: string, password: string) => {
       await browser.close();
 
 
-      throw Error(errorMessage) //TODO
+      return errorMessage
     }
 
   } catch (error) {
     try {
-      page.waitForNavigation({ timeout: 10000 })
       const success = page.url() === 'https://albiononline.com/register/check-email'
 
       if (success) {
         await browser.close();
-        return "Created"
+        return "Registered"
       }
     } catch (error) {
+      console.log(error);
+      
       await browser.close();
       return "Internal error"// TODO
     }
