@@ -20,3 +20,5 @@ home/user/accounts
 home/user/traveler-data/ -> git clone here
 
 There must be a example folder on /home/user/accounts
+
+To use createAccounts, is needed to set a 2captcha apikey on .env from backend folder
