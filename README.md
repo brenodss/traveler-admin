@@ -13,5 +13,10 @@
 ````
 4- Go inside backend and run -> bun --watch index.ts
 ````
+To make this project work the following steps are needed.
 
+Linux folders have to match this structure:
+home/user/accounts
+home/user/traveler-data/ -> git clone here
 
+There must be a example folder on /home/user/accounts
