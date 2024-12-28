@@ -12,7 +12,7 @@ function App() {
   const { isLoading, data, refetch, error, status } = useQuery({
     queryKey: ['containersRunning'],
     queryFn: () =>
-      fetch('http://192.168.0.42:5678/webhook/containers', {
+      fetch('http://192.168.0.122:5678/webhook/containers', {
         method: "GET",
         referrerPolicy: "unsafe-url",
         headers: {
